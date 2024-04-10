@@ -99,19 +99,26 @@ class Slot {
       )
     }
 
+    let payout = 0
     for (const line of this.lines) {
       let matchCount = 0
-      let win
+      let winSymbol = 0
+
       for (let i = 0; i < line.length - 1; i++) {
         if (currentScreen[i][line[i]] === currentScreen[i + 1][line[i + 1]]) {
           matchCount++
-        }
-        if (matchCount >= 4) {
-          win = true
-          console.log("winning line: ", line)
+          if (!winSymbol) winSymbol = currentScreen[i][line[i]]
         }
       }
+
+      if (!matchCount || this.symbols[winSymbol][matchCount] === 0) {
+        console.log("No win")
+      } else {
+        console.log("Pay is: ", this.symbols[winSymbol][matchCount])
+        payout += this.symbols[winSymbol][matchCount]
+      }
     }
+    console.log("Total payout: ", payout)
   }
 }
 // lines: [
