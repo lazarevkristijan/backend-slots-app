@@ -11,11 +11,19 @@ class Slot {
         console.log("---------GAME START---------");
         let iteration = 0;
         let totalPayout = 0;
+        let reelsRotationiteration = 0;
         while (iteration < spins) {
             console.log("SPIN NUMBER: #", iteration + 1);
             let currentScreen = [];
             for (let i = 0; i < 5; i++) {
-                currentScreen[i] = this.reels[i].slice(0, 3);
+                let from = 0 + reelsRotationiteration * 3;
+                let to = 3 + reelsRotationiteration * 3;
+                if (from + 4 > this.reels[i].length) {
+                    from = 0;
+                    to = 3;
+                    reelsRotationiteration = 0;
+                }
+                currentScreen[i] = this.reels[i].slice(from, to);
             }
             let spinPayout = 0;
             let payLines = [];
@@ -42,6 +50,7 @@ class Slot {
             console.log("---------------------");
             totalPayout += spinPayout;
             iteration++;
+            reelsRotationiteration++;
             console.log("---------------------");
         }
         console.log(`Total payout: $${totalPayout}`);
@@ -55,4 +64,4 @@ class Slot {
     }
 }
 const slot = new Slot(config);
-slot.spin(2);
+slot.spin(250);
