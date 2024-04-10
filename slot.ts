@@ -19,41 +19,53 @@ class Slot {
     this.reels = config.reels
   }
 
-  spin(): SpinResult {
-    let currentScreen: number[][] = []
+  spin(spins: number = 1): SpinResult {
+    console.log("---------GAME START---------")
 
-    for (let i = 0; i < 5; i++) {
-      currentScreen[i] = this.reels[i].slice(0, 3)
-    }
+    let iteration = 0
+    let totalPayout = 0
 
-    let payout = 0
-    let payLines = []
-    for (const line of this.lines) {
-      let matchCount = 0
-      let winSymbol = 0
+    while (iteration < spins) {
+      console.log("SPIN NUMBER: #", iteration + 1)
+      let currentScreen: number[][] = []
 
-      for (let i = 0; i < line.length - 1; i++) {
-        if (currentScreen[i][line[i]] === currentScreen[i + 1][line[i + 1]]) {
-          matchCount++
-          if (!winSymbol) winSymbol = currentScreen[i][line[i]]
+      for (let i = 0; i < 5; i++) {
+        currentScreen[i] = this.reels[i].slice(0, 3)
+      }
+      let spinPayout = 0
+      let payLines = []
+      for (const line of this.lines) {
+        let matchCount = 0
+        let winSymbol = 0
+
+        for (let i = 0; i < line.length - 1; i++) {
+          if (currentScreen[i][line[i]] === currentScreen[i + 1][line[i + 1]]) {
+            matchCount++
+            if (!winSymbol) winSymbol = currentScreen[i][line[i]]
+          }
+        }
+
+        if (matchCount && this.symbols[winSymbol][matchCount] !== 0) {
+          spinPayout += this.symbols[winSymbol][matchCount]
+
+          payLines.push(line)
         }
       }
+      console.log("---------------------")
+      console.log("SPIN ITERATION RESULT")
+      console.log(spinPayout ? `Win, pay is: $${spinPayout}` : "No win")
+      console.log("Pay lines: ", payLines)
+      this.printBoard(currentScreen)
+      console.log("---------------------")
 
-      if (!matchCount || this.symbols[winSymbol][matchCount] === 0) {
-        console.log("No win")
-      } else {
-        // Optionally show payout for each line
-        // console.log("Pay is: ", this.symbols[winSymbol][matchCount])
-        payout += this.symbols[winSymbol][matchCount]
-        payLines.push(line)
-      }
+      totalPayout += spinPayout
+      iteration++
+      console.log("---------------------")
     }
 
-    console.log("Pay lines: ", payLines)
-    console.log("Spin payout: ", payout)
-    this.printBoard(currentScreen)
-
-    return { payout: payout, win: !!payout }
+    console.log(`Total payout: $${totalPayout}`)
+    console.log("Spins: ", spins)
+    return { payout: totalPayout, win: !!totalPayout }
   }
 
   printBoard(currentScreen: number[][]): void {
@@ -70,4 +82,4 @@ class Slot {
 }
 
 const slot = new Slot(config)
-slot.spin()
+slot.spin(2)
