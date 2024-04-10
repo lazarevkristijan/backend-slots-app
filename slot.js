@@ -1,57 +1,4 @@
 "use strict";
-class Slot {
-    constructor(config) {
-        this.reelsCount = config.reelsCount;
-        this.rowsCount = config.rowsCount;
-        this.symbols = config.symbols;
-        this.lines = config.lines;
-        this.reels = config.reels;
-    }
-    spin() {
-        const reels = [
-            [
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-            ],
-            [
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-            ],
-            [
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-            ],
-            [
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-            ],
-            [
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-                Math.floor(Math.random() * 2 + 1),
-            ],
-        ];
-        for (let i = 0; i < reels.length; i++) {
-            for (let j = 0; j < reels[i].length; i++) {
-                console.log(reels[i][j]);
-            }
-        }
-        for (const list of reels) {
-            let win = true;
-            for (let i = 0; i < list.length - 1; i++) {
-                if (list[i] !== list[i + 1]) {
-                    win = false;
-                }
-            }
-            if (win)
-                console.log("win at line: ", list);
-        }
-    }
-}
 const config = {
     reelsCount: 5,
     rowsCount: 3,
@@ -117,5 +64,27 @@ const config = {
         ],
     ],
 };
+class Slot {
+    constructor(config) {
+        this.reelsCount = config.reelsCount;
+        this.rowsCount = config.rowsCount;
+        this.symbols = config.symbols;
+        this.lines = config.lines;
+        this.reels = config.reels;
+    }
+    spin() {
+        let currentScreen = [];
+        for (let i = 0; i < 5; i++) {
+            currentScreen[i] = config.reels[i].slice(0, 3);
+            // currentScreen[1] = config.reels[i].slice(0, 3)
+            // currentScreen[0] = config.reels[i].slice(0, 3)
+            // currentScreen[0] = config.reels[i].slice(0, 3)
+            // currentScreen[0] = config.reels[i].slice(0, 3)
+        }
+        for (let i = 0; i < 3; i++) {
+            console.log(currentScreen[0][i], currentScreen[1][i], currentScreen[2][i], currentScreen[3][i], currentScreen[4][i]);
+        }
+    }
+}
 const slot = new Slot(config);
 slot.spin();
