@@ -1,6 +1,7 @@
 {
   "name": "backend-slots-program",
   "version": "1.0.0",
+  "type": "module",
   "description": "Slots program",
   "main": "slot.js",
   "scripts": {
