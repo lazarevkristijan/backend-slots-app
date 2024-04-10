@@ -75,16 +75,35 @@ class Slot {
     spin() {
         let currentScreen = [];
         for (let i = 0; i < 5; i++) {
-            currentScreen[i] = config.reels[i].slice(0, 3);
-            // currentScreen[1] = config.reels[i].slice(0, 3)
-            // currentScreen[0] = config.reels[i].slice(0, 3)
-            // currentScreen[0] = config.reels[i].slice(0, 3)
-            // currentScreen[0] = config.reels[i].slice(0, 3)
+            currentScreen[i] = this.reels[i].slice(0, 3);
         }
         for (let i = 0; i < 3; i++) {
             console.log(currentScreen[0][i], currentScreen[1][i], currentScreen[2][i], currentScreen[3][i], currentScreen[4][i]);
         }
+        for (const line of this.lines) {
+            let matchCount = 0;
+            let win;
+            for (let i = 0; i < line.length - 1; i++) {
+                if (currentScreen[i][line[i]] === currentScreen[i + 1][line[i + 1]]) {
+                    matchCount++;
+                }
+                if (matchCount >= 4) {
+                    win = true;
+                    console.log("winning line: ", line);
+                }
+            }
+        }
     }
 }
+// lines: [
+//   [0, 0, 0, 0, 0],
+//   [1, 1, 1, 1, 1],
+//   [2, 2, 2, 2, 2],
+//   [0, 1, 0, 1, 0],
+//   [1, 2, 1, 2, 1],
+// ],
+// 1 1 1 1 1
+// 2 2 2 2 2
+// 3 3 3 3 3
 const slot = new Slot(config);
 slot.spin();
