@@ -20,6 +20,7 @@ class Slot {
   }
 
   spin(spins: number = 1): SpinResult {
+    console.time("Execution time")
     console.log("---------GAME START---------")
 
     let iteration = 0
@@ -65,16 +66,19 @@ class Slot {
       console.log(spinPayout ? `Win, pay is: $${spinPayout}` : "No win")
       console.log("Pay lines: ", payLines)
       this.printBoard(currentScreen)
-      console.log("---------------------")
 
       totalPayout += spinPayout
       iteration++
       reelsRotationiteration++
-      console.log("---------------------")
+      console.log("---------------------\n")
     }
 
     console.log(`Total payout: $${totalPayout}`)
-    console.log("Spins: ", spins)
+    console.log("Spins: ", spins + "\n")
+
+    console.log("--------")
+    console.timeEnd("Execution time")
+    console.log("--------")
     return { payout: totalPayout, win: !!totalPayout }
   }
 
@@ -92,4 +96,4 @@ class Slot {
 }
 
 const slot = new Slot(config)
-slot.spin(250)
+slot.spin(30)
