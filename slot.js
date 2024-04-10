@@ -77,10 +77,8 @@ class Slot {
         for (let i = 0; i < 5; i++) {
             currentScreen[i] = this.reels[i].slice(0, 3);
         }
-        for (let i = 0; i < 3; i++) {
-            console.log(currentScreen[0][i], currentScreen[1][i], currentScreen[2][i], currentScreen[3][i], currentScreen[4][i]);
-        }
         let payout = 0;
+        let payLines = [];
         for (const line of this.lines) {
             let matchCount = 0;
             let winSymbol = 0;
@@ -95,22 +93,22 @@ class Slot {
                 console.log("No win");
             }
             else {
-                console.log("Pay is: ", this.symbols[winSymbol][matchCount]);
+                // Optionally show payout for each line
+                // console.log("Pay is: ", this.symbols[winSymbol][matchCount])
                 payout += this.symbols[winSymbol][matchCount];
+                payLines.push(line);
             }
         }
-        console.log("Total payout: ", payout);
+        console.log("Pay lines: ", payLines);
+        console.log("Spin payout: ", payout);
+        this.printBoard(currentScreen);
+        return { payout: payout, win: !!payout };
+    }
+    printBoard(currentScreen) {
+        for (let i = 0; i < 3; i++) {
+            console.log(currentScreen[0][i], currentScreen[1][i], currentScreen[2][i], currentScreen[3][i], currentScreen[4][i]);
+        }
     }
 }
-// lines: [
-//   [0, 0, 0, 0, 0],
-//   [1, 1, 1, 1, 1],
-//   [2, 2, 2, 2, 2],
-//   [0, 1, 0, 1, 0],
-//   [1, 2, 1, 2, 1],
-// ],
-// 1 1 1 1 1
-// 2 2 2 2 2
-// 3 3 3 3 3
 const slot = new Slot(config);
 slot.spin();

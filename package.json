@@ -1,14 +1,13 @@
 {
-  "name": "dreamshot",
+  "name": "backend-slots-program",
   "version": "1.0.0",
-  "type": "module",
-  "description": "",
+  "description": "Slots program",
   "main": "slot.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
-  "author": "",
+  "author": "Kristijan Lazarev",
   "license": "ISC",
   "devDependencies": {
     "typescript": "^5.4.4"
